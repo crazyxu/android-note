@@ -18,19 +18,9 @@
 
 
 
+	<meta name="keywords" content="bitmap,cache,image," />
 
-    <meta name="keywords" content="android,xucan" />
-
-
-
-
-
-    <link rel="shorticon icon" type="image/x-icon" href="/android-note/favicon.ico?v=0.4.0" />
-
-
-
-
-  <title> Hello World // Android学习笔记 </title>
+  <title> Android图片读写及简单处理 // Android学习笔记 </title>
 </head>
 
 <body>
@@ -111,7 +101,7 @@
           
           
             
-              Hello World
+              Android图片读写及简单处理
             
           
         </h1>
@@ -120,15 +110,33 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2015-06-23
+            发表于 2015-06-24
           
         </span>
 
         
           
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <a href="/android-note/categories/基本工具/">基本工具</a>
+
+                
+                
+
+              
+            </span>
+          
         
 
         
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/android-note/2015/06/24/Android图片读写及简单处理/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/24/Android图片读写及简单处理/"></span>
+            </a>
+          </span>
           
         
       </div>
@@ -141,22 +149,78 @@
         
 
         
-          <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+          <h3 id="从网络读取图片">从网络读取图片</h3><pre><code><span class="comment">//使用HttpURLConnection读取网络资源</span>
+<span class="keyword">public</span> <span class="keyword">static</span> <span class="function">InputStream <span class="title">getInputStreamByUrl</span><span class="params">(String imageUrl)</span> </span>{
 
+    InputStream inStream = <span class="keyword">null</span>;
+    URL url;
+    <span class="keyword">try</span> {
+        url = <span class="keyword">new</span> URL(imageUrl);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        inStream = conn.getInputStream();
+    } <span class="keyword">catch</span> (Exception e) {
+        e.printStackTrace();
+    }
+    <span class="keyword">return</span> inStream;
+}
+<span class="comment">//BitmapFactory.decodeStream</span>
+<span class="keyword">public</span> <span class="keyword">static</span> <span class="function">Bitmap <span class="title">getBitmapByUrl</span><span class="params">(String url)</span> </span>{
+    InputStream inStream = getInputStreamByUrl(url);
+    <span class="function"><span class="keyword">return</span> BitmapFactory.<span class="title">decodeStream</span><span class="params">(inStream)</span></span>;
+}
+</code></pre><p><a id="more"></a>阅读全文</p>
+<h3 id="将bitmap缓存为本地图片">将bitmap缓存为本地图片</h3><pre><code><span class="comment">/**
+*把bitmap写入sd
+* @param bm bitmap图片
+*@param imgPath 图片文件夹(结束带'/')
+*@param imgName 图片名称
+*@return 保存是否成功
+*/</span>
+<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span>  saveImgOnSd(Bitmap bm,String imgPath,String imgName) {
+    <span class="keyword">if</span>(Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)){
+        <span class="keyword">File</span> dirFile = <span class="keyword">new</span> <span class="keyword">File</span>(imgPath);
+        <span class="keyword">try</span> {
+            <span class="keyword">if</span>(!dirFile.exists()){
+                dirFile.mkdirs();
+            }
+            <span class="keyword">File</span> <span class="keyword">file</span> = <span class="keyword">new</span> <span class="keyword">File</span>( imgPath+imgName);
+            <span class="keyword">if</span>(!<span class="keyword">file</span>.exists())
+                <span class="keyword">file</span>.createNewFile();
+            FileOutputStream fileOutputStream = <span class="keyword">new</span> FileOutputStream(<span class="keyword">file</span>);
+            <span class="comment">//图片压缩（100表示没有压缩）</span>
+            bm.compress(Bitmap.CompressFormat.JPEG, <span class="number">100</span>, fileOutputStream);
+            fileOutputStream.close();
+            <span class="keyword">return</span> <span class="keyword">true</span>;
+        } <span class="keyword">catch</span> (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    <span class="keyword">return</span> <span class="keyword">false</span>;
+
+}
+</code></pre>
         
       </div>
     
 
     
       <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/android-note/tags/bitmap/">
+                #bitmap
+              </a>
+            
+              <a href="/android-note/tags/cache/">
+                #cache
+              </a>
+            
+              <a href="/android-note/tags/image/">
+                #image
+              </a>
+            
+          </div>
         
 
         
@@ -171,6 +235,11 @@
 
   
     <div class="comments" id="comments">
+      
+        <div class="ds-thread" data-thread-key="2015/06/24/Android图片读写及简单处理/"
+             data-title="Android图片读写及简单处理" data-url="http://github.xucan.me/android-note/2015/06/24/Android图片读写及简单处理/">
+        </div>
+
       
     </div>
   
@@ -215,11 +284,11 @@
           <span class="site-state-item-name">日志</span>
         </div>
         <div class="site-state-item site-state-tags">
-            <span class="site-state-item-count">0</span>
+            <span class="site-state-item-count">3</span>
             <span class="site-state-item-name">标签</span>
         </div>
         <div class="site-state-item site-state-pages">
-            <span class="site-state-item-count">0</span>
+            <span class="site-state-item-count">2</span>
             <span class="site-state-item-name">页面</span>
         </div>
       </div>
@@ -241,7 +310,7 @@
         <div class="post-toc">
           
           
-            <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick_Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create_a_new_post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run_server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate_static_files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy_to_remote_sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+            <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#从网络读取图片"><span class="nav-number">1.</span> <span class="nav-text">从网络读取图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将bitmap缓存为本地图片"><span class="nav-number">2.</span> <span class="nav-text">将bitmap缓存为本地图片</span></a></li></ol></div>
           
         </div>
         <div class="post-toc-indicator-bottom post-toc-indicator"></div>
@@ -788,11 +857,24 @@
   
 
   
-  
 
   
+    
+  
 
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"crazyxu"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
 
+  
   
 </body>
 </html>

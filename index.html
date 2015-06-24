@@ -29,6 +29,16 @@
 
 
 
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?10658452";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
 
   <title> Android学习笔记 </title>
 </head>
@@ -114,8 +124,8 @@
           
           
             
-              <a class="post-title-link" href="/android-note/2015/06/23/hello-world/">
-                Hello World
+              <a class="post-title-link" href="/android-note/2015/06/24/Android图片读写及简单处理/">
+                Android图片读写及简单处理
               </a>
             
           
@@ -125,15 +135,33 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2015-06-23
+            发表于 2015-06-24
           
         </span>
 
         
           
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <a href="/android-note/categories/基本工具/">基本工具</a>
+
+                
+                
+
+              
+            </span>
+          
         
 
         
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/android-note/2015/06/24/Android图片读写及简单处理/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/24/Android图片读写及简单处理/"></span>
+            </a>
+          </span>
           
         
       </div>
@@ -147,16 +175,31 @@
 
         
           
-            <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+            <h3 id="从网络读取图片">从网络读取图片</h3><pre><code><span class="comment">//使用HttpURLConnection读取网络资源</span>
+<span class="keyword">public</span> <span class="keyword">static</span> <span class="function">InputStream <span class="title">getInputStreamByUrl</span><span class="params">(String imageUrl)</span> </span>{
 
+    InputStream inStream = <span class="keyword">null</span>;
+    URL url;
+    <span class="keyword">try</span> {
+        url = <span class="keyword">new</span> URL(imageUrl);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        inStream = conn.getInputStream();
+    } <span class="keyword">catch</span> (Exception e) {
+        e.printStackTrace();
+    }
+    <span class="keyword">return</span> inStream;
+}
+<span class="comment">//BitmapFactory.decodeStream</span>
+<span class="keyword">public</span> <span class="keyword">static</span> <span class="function">Bitmap <span class="title">getBitmapByUrl</span><span class="params">(String url)</span> </span>{
+    InputStream inStream = getInputStreamByUrl(url);
+    <span class="function"><span class="keyword">return</span> BitmapFactory.<span class="title">decodeStream</span><span class="params">(inStream)</span></span>;
+}
+</code></pre><p>
+            <div class="post-more-link text-center">
+              <a class="btn" href="/android-note/2015/06/24/Android图片读写及简单处理/#more">
+                阅读全文 &raquo;
+              </a>
+            </div>
           
         
       </div>
@@ -164,6 +207,22 @@
 
     
       <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/android-note/tags/bitmap/">
+                #bitmap
+              </a>
+            
+              <a href="/android-note/tags/cache/">
+                #cache
+              </a>
+            
+              <a href="/android-note/tags/image/">
+                #image
+              </a>
+            
+          </div>
         
 
         
@@ -210,11 +269,11 @@
           <span class="site-state-item-name">日志</span>
         </div>
         <div class="site-state-item site-state-tags">
-            <span class="site-state-item-count">0</span>
+            <span class="site-state-item-count">3</span>
             <span class="site-state-item-name">标签</span>
         </div>
         <div class="site-state-item site-state-pages">
-            <span class="site-state-item-count">0</span>
+            <span class="site-state-item-count">2</span>
             <span class="site-state-item-name">页面</span>
         </div>
       </div>
@@ -450,11 +509,24 @@
   
 
   
-  
 
   
+    
+  
 
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"crazyxu"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
 
+  
   
 </body>
 </html>
