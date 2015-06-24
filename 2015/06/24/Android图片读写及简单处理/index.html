@@ -101,7 +101,7 @@
         <li class="menu-item menu-item-home">
           <a href="/android-note/">
             <i class="menu-item-icon icon-home"></i> <br />
-            首頁
+            首页
           </a>
         </li>
       
@@ -109,7 +109,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/android-note/categories">
             <i class="menu-item-icon icon-categories"></i> <br />
-            分類
+            分类
           </a>
         </li>
       
@@ -117,7 +117,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/android-note/archives">
             <i class="menu-item-icon icon-archives"></i> <br />
-            歸檔
+            归档
           </a>
         </li>
       
@@ -125,15 +125,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/android-note/tags">
             <i class="menu-item-icon icon-tags"></i> <br />
-            標籤
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-commonweal">
-          <a href="/android-note/404.html">
-            <i class="menu-item-icon icon-commonweal"></i> <br />
-            公益404
+            标签
           </a>
         </li>
       
@@ -190,12 +182,12 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-06-24
+          发表于 2015-06-24
         </span>
 
         
           <span class="post-category">
-            &nbsp; | &nbsp; 分類於
+            &nbsp; | &nbsp; 分类于
             
               <a href="/android-note/categories/基本工具/">基本工具</a>
 
@@ -274,7 +266,29 @@
     <span class="keyword">return</span> <span class="keyword">false</span>;
 
 }
-</code></pre><h3 id="bitmap与drawble转换">bitmap与drawble转换</h3>
+</code></pre><h3 id="bitmap,drawable,id,InputStream相互转换">bitmap,drawable,id,InputStream相互转换</h3><pre><code><span class="comment">//InputStream转Bitmap</span>
+bitmap=BitmapFactory.decodeStream<span class="params">(is)</span>;
+
+<span class="comment">//id转Bitmap,res=context.getResources(),id=R.drawable.xxx</span>
+bitmap=BitmapFactory.decodeResourResources<span class="params">()</span>,id res,int id);
+
+<span class="comment">//drawable转bitmap</span>
+bitmap=<span class="params">(BitmapDrawable)</span>drawable.getBitmap<span class="params">()</span>;
+
+<span class="comment">//Decode a file path into a bitmap.</span>
+bitmap = BitmapFactory.decodeFile<span class="params">(path)</span>;  
+
+<span class="comment">//id转drawable</span>
+drawable = activity.getResources<span class="params">()</span>.getDrawable<span class="params">(R.drawable.xxx)</span>;
+
+<span class="comment">//bitmap转drawable</span>
+ drawable =new BitmapDrawable<span class="params">(bitmap)</span>;
+
+ <span class="comment">//从bitmap，drawable，id设置ImageView</span>
+ imageView.setImageBitmap<span class="params">(bitmap)</span>;  
+ imageView.setImageDrawable<span class="params">(drawable)</span>
+ imageView.setImageResource<span class="params">(id)</span>;
+</code></pre>
       
     </div>
 
@@ -336,10 +350,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目錄
+            文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            本站概覽
+            站点概览
           </li>
         </ul>
       
@@ -354,21 +368,21 @@
           <div class="site-state-item site-state-posts">
             <a href="/android-note/archives">
               <span class="site-state-item-count">1</span>
-              <span class="site-state-item-name">文章</span>
+              <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/android-note/categories">
               <span class="site-state-item-count">1</span>
-              <span class="site-state-item-name">分類</span>
+              <span class="site-state-item-name">分类</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/android-note/tags">
               <span class="site-state-item-count">3</span>
-              <span class="site-state-item-name">標籤</span>
+              <span class="site-state-item-name">标签</span>
               </a>
           </div>
 
@@ -411,7 +425,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#从网络读取图片"><span class="nav-number">1.</span> <span class="nav-text">从网络读取图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将bitmap缓存为本地图片"><span class="nav-number">2.</span> <span class="nav-text">将bitmap缓存为本地图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bitmap与drawble转换"><span class="nav-number">3.</span> <span class="nav-text">bitmap与drawble转换</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#从网络读取图片"><span class="nav-number">1.</span> <span class="nav-text">从网络读取图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将bitmap缓存为本地图片"><span class="nav-number">2.</span> <span class="nav-text">将bitmap缓存为本地图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bitmap,drawable,id,InputStream相互转换"><span class="nav-number">3.</span> <span class="nav-text">bitmap,drawable,id,InputStream相互转换</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
@@ -437,11 +451,11 @@
 </div>
 
 <div class="powered-by">
-  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
 </div>
 
 <div class="theme-info">
-  主題 -
+  主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Mist
   </a>
