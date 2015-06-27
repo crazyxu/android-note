@@ -1,0 +1,867 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/android-note/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/android-note/css/main.css?v=0.4.3"/>
+
+
+
+
+  <meta name="keywords" content="DrawerLayout,ToolBar,google+," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/android-note/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f5477a0c0d549eb493b3239aefceaa80";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 结合DrawerLayout和ToolBar实现google+侧滑导航 // Android学习笔记 </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/android-note/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Android学习笔记</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/android-note/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/android-note/categories">
+            <i class="menu-item-icon icon-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/android-note/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/android-note/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+<form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'uHW85mqQruWv92hshj47','2.0.0');
+</script>
+
+<div class="site-search-toggle"></div>
+    </div>
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              结合DrawerLayout和ToolBar实现google+侧滑导航
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-06-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/android-note/categories/UI设计/">UI设计</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/android-note/2015/06/27/结合LayoutDrawer和ToolBar实现google-侧滑导航/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/27/结合LayoutDrawer和ToolBar实现google-侧滑导航/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h3 id="简介">简介</h3><p>详细介绍如何使用<code>LayoutDrawer</code>和<code>ToolBar</code>实现类似google+，知乎app的侧滑导航UI设计，首先看效果图。</p>
+<p>类似google+<br><img src="/android-note/image/google+_1.png" alt="类似google+"> <img src="/android-note/image/google+_2.png" alt="类似google+"><br><a id="more"></a>阅读全文<br>类似知乎App<br><img src="/android-note/image/zhihu_1.png" alt="类似知乎App">  <img src="/android-note/image/zhihu_2.png" alt="类似知乎App"></p>
+<h3 id="activity_main-xml"><code>activity_main.xml</code></h3><pre><code>&lt;android<span class="class">.support</span><span class="class">.v4</span><span class="class">.widget</span><span class="class">.DrawerLayout</span>
+xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span>
+android:layout_width=<span class="string">"fill_parent"</span>
+android:layout_height=<span class="string">"fill_parent"</span>
+android:id=<span class="string">"@+id/drawer"</span>&gt;
+&lt;LinearLayout
+    android:layout_width=<span class="string">"fill_parent"</span>
+    android:layout_height=<span class="string">"fill_parent"</span>
+    android:orientation=<span class="string">"vertical"</span>&gt;
+    &lt;android<span class="class">.support</span><span class="class">.v7</span><span class="class">.widget</span><span class="class">.Toolbar</span>
+        android:layout_width=<span class="string">"fill_parent"</span>
+        android:layout_height=<span class="string">"wrap_content"</span>
+        android:<span class="attribute">background</span>=<span class="string">"#ff12b8dd"</span>
+        android:id=<span class="string">"@+id/tool_bar"</span>&gt;
+
+    &lt;/android<span class="class">.support</span><span class="class">.v7</span><span class="class">.widget</span><span class="class">.Toolbar</span>&gt;
+
+    &lt;FrameLayout
+        android:layout_width=<span class="string">"fill_parent"</span>
+        android:layout_height=<span class="string">"fill_parent"</span>
+        android:id=<span class="string">"@+id/fragment_layout"</span>&gt;
+    &lt;/FrameLayout&gt;
+    &lt;/LinearLayout&gt;
+    &lt;include
+        android:id=<span class="string">"@+id/drawer_left_layout"</span>
+        layout=<span class="string">"@layout/drawer_left_layout"</span>
+        /&gt;
+&lt;/android<span class="class">.support</span><span class="class">.v4</span><span class="class">.widget</span><span class="class">.DrawerLayout</span>&gt;
+</code></pre><h3 id="drawer_left_layout-xml"><code>drawer_left_layout.xml</code></h3><p>自定义侧滑<code>View</code>，这里只放置一个<code>ListView</code></p>
+<pre><code><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="tag">&lt;<span class="title">LinearLayout</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span>
+    <span class="attribute">android:layout_width</span>=<span class="value">"235dp"</span>
+    <span class="attribute">android:layout_height</span>=<span class="value">"match_parent"</span>
+    <span class="attribute">android:layout_gravity</span>=<span class="value">"left"</span>
+    <span class="attribute">android:orientation</span>=<span class="value">"vertical"</span>
+   &gt;</span>
+    <span class="tag">&lt;<span class="title">ListView</span>
+        <span class="attribute">android:layout_width</span>=<span class="value">"235dp"</span>
+        <span class="attribute">android:id</span>=<span class="value">"@+id/drawer_lv"</span>
+        <span class="attribute">android:layout_height</span>=<span class="value">"fill_parent"</span>
+        <span class="attribute">android:background</span>=<span class="value">"#ffffff"</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">ListView</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">LinearLayout</span>&gt;</span>
+</code></pre><h3 id="MainActivity-java"><code>MainActivity.java</code></h3><p>主要代码，如有疑问或建议可以在网页底部反馈<br>    package me.xucan.android_note;<br>    import android.os.Bundle;<br>    import android.support.v4.app.Fragment;<br>    import android.support.v4.app.FragmentTransaction;<br>    import android.support.v4.widget.DrawerLayout;<br>    import android.support.v7.app.ActionBarDrawerToggle;<br>    import android.support.v7.app.AppCompatActivity;<br>    import android.support.v7.widget.Toolbar;<br>    import android.view.Menu;<br>    import android.view.MenuItem;<br>    import android.view.View;<br>    import android.widget.AdapterView;<br>    import android.widget.ArrayAdapter;<br>    import android.widget.LinearLayout;<br>    import android.widget.ListView;</p>
+<pre><code><span class="keyword">import</span> me.xucan.android_note.image_util.ImageUtilFragment;
+<span class="keyword">import</span> me.xucan.android_note.simulate_login.SimulateLoginFragment;
+
+
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span></span>{
+    <span class="comment">//ToolBar</span>
+    <span class="keyword">private</span> Toolbar toolbar;
+    <span class="comment">//drawer</span>
+    <span class="keyword">private</span> DrawerLayout drawer;
+    <span class="comment">//却换箭头</span>
+    <span class="keyword">private</span> ActionBarDrawerToggle drawerToggle;
+
+    <span class="comment">//侧滑layout</span>
+    <span class="keyword">private</span> LinearLayout leftDrawer;
+
+    <span class="comment">//功能列表</span>
+    <span class="keyword">private</span> ListView lv;
+
+    <span class="comment">//列表数据</span>
+    <span class="keyword">private</span> String[] arr_module;
+
+    <span class="comment">//静态常量</span>
+    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> FRA_MAIN=<span class="number">0</span>;
+    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> FRA_IMAGE_UTIL=<span class="number">1</span>;
+    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> FRA_SIMULATE_LOGIN=<span class="number">2</span>;
+
+
+    <span class="annotation">@Override</span>
+    <span class="keyword">protected</span> <span class="function"><span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>{
+        <span class="keyword">super</span>.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        initToolBar();
+        initDrawer();
+        initLeftLayout();
+    }
+
+    <span class="comment">//初始化ToolBar</span>
+    <span class="function"><span class="keyword">void</span> <span class="title">initToolBar</span><span class="params">()</span></span>{
+        toolbar=(Toolbar)<span class="keyword">super</span>.findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
+    }
+
+    <span class="comment">//初始化DrawerLayout</span>
+    <span class="function"><span class="keyword">void</span> <span class="title">initDrawer</span><span class="params">()</span></span>{
+        drawer=(DrawerLayout)<span class="keyword">super</span>.findViewById(R.id.drawer);
+        <span class="comment">//drawer监听事件</span>
+        drawerToggle=<span class="keyword">new</span> ActionBarDrawerToggle(<span class="keyword">this</span>,drawer,toolbar,R.string.open_drawer,R.string.close_drawer){
+            <span class="annotation">@Override</span>
+            <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onDrawerClosed</span><span class="params">(View drawerView)</span> </span>{
+                <span class="keyword">super</span>.onDrawerClosed(drawerView);
+            }
+
+            <span class="annotation">@Override</span>
+            <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onDrawerOpened</span><span class="params">(View drawerView)</span> </span>{
+                <span class="keyword">super</span>.onDrawerOpened(drawerView);
+            }
+        };
+        <span class="comment">//Sync the toggle state after onRestoreInstanceState has occurred.</span>
+        drawerToggle.syncState();
+        drawer.setDrawerListener(drawerToggle);
+        <span class="comment">//绑定默认fragment,MainFragment</span>
+        android.support.v4.app.FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_layout, <span class="keyword">new</span> MainFragment());
+        ft.commit();
+    }
+
+    <span class="comment">//初始化左侧导航</span>
+    <span class="function"><span class="keyword">void</span> <span class="title">initLeftLayout</span><span class="params">()</span></span>{
+        leftDrawer=(LinearLayout)<span class="keyword">super</span>.findViewById(R.id.drawer_left_layout);
+        initDrawerLv();
+    }
+
+    <span class="comment">//初始化侧滑菜单列表</span>
+    <span class="function"><span class="keyword">void</span> <span class="title">initDrawerLv</span><span class="params">()</span></span>{
+        lv=(ListView)<span class="keyword">super</span>.findViewById(R.id.drawer_lv);
+        <span class="comment">//列表数据</span>
+        arr_module=getResources().getStringArray(R.array.arr_module);
+        <span class="comment">//适配器</span>
+        ArrayAdapter adapter=<span class="keyword">new</span> ArrayAdapter(<span class="keyword">this</span>,android.R.layout.simple_list_item_1,arr_module);
+        lv.setAdapter(adapter);
+        <span class="comment">//事件监听</span>
+        lv.setOnItemClickListener(<span class="keyword">new</span> ListView.OnItemClickListener() {
+            <span class="comment">//点击item,切换到对应Fragment</span>
+            <span class="annotation">@Override</span>
+            <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onItemClick</span><span class="params">(AdapterView&lt;?&gt; adapterView, View view, <span class="keyword">int</span> i, <span class="keyword">long</span> l)</span> </span>{
+                Fragment fra = <span class="keyword">null</span>;
+                <span class="keyword">switch</span> (i) {
+                    <span class="keyword">case</span> FRA_MAIN:
+                        fra = <span class="keyword">new</span> MainFragment();
+                        <span class="keyword">break</span>;
+                    <span class="keyword">case</span> FRA_IMAGE_UTIL:
+                        fra = <span class="keyword">new</span> ImageUtilFragment();
+                        <span class="keyword">break</span>;
+                    <span class="keyword">case</span> FRA_SIMULATE_LOGIN:
+                        fra = <span class="keyword">new</span> SimulateLoginFragment();
+                        <span class="keyword">break</span>;
+                }
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment_layout, fra);
+                ft.commit();
+                <span class="comment">//更改toolbar标题</span>
+                toolbar.setTitle(arr_module[i]);
+                <span class="comment">//关闭drawer</span>
+                drawer.closeDrawer(leftDrawer);
+            }
+        });
+    }
+
+
+
+    <span class="annotation">@Override</span>
+    <span class="keyword">public</span> <span class="function"><span class="keyword">boolean</span> <span class="title">onCreateOptionsMenu</span><span class="params">(Menu menu)</span> </span>{
+        <span class="comment">// Inflate the menu; this adds items to the action bar if it is present.</span>
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        <span class="keyword">return</span> <span class="keyword">true</span>;
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="keyword">public</span> <span class="function"><span class="keyword">boolean</span> <span class="title">onOptionsItemSelected</span><span class="params">(MenuItem item)</span> </span>{
+        <span class="keyword">switch</span> (item.getItemId()){
+            <span class="keyword">case</span> R.id.action_settings:
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> android.R.id.home:
+                //通过箭头（Home）来打开或关闭drawer
+                <span class="keyword">if</span>(drawer.isDrawerOpen(leftDrawer))
+                    drawer.closeDrawer(leftDrawer);
+                <span class="keyword">else</span>
+                    drawer.openDrawer(leftDrawer);
+                <span class="keyword">break</span>;
+        }
+        <span class="function"><span class="keyword">return</span> <span class="keyword">super</span>.<span class="title">onOptionsItemSelected</span><span class="params">(item)</span></span>;
+    }
+
+}
+</code></pre><h3 id="style-xml"><code>style.xml</code></h3><p>在<code>AndroidManifest.xml</code>中添加style</p>
+<pre><code><span class="tag">&lt;<span class="title">resources</span>&gt;</span>
+    <span class="comment">&lt;!-- Base application theme. --&gt;</span>
+    <span class="tag">&lt;<span class="title">style</span> <span class="attribute">name</span>=<span class="value">"AppTheme"</span> <span class="attribute">parent</span>=<span class="value">"Theme.AppCompat.Light.NoActionBar"</span>&gt;</span><span class="css">
+        &lt;!<span class="tag">--</span> 箭头 <span class="tag">--</span>&gt;
+        &lt;<span class="tag">item</span> <span class="tag">name</span>="<span class="tag">drawerArrowStyle</span>"&gt;<span class="at_rule">@<span class="keyword">style/AppTheme.DrawerArrowToggle&lt;/item&gt;</span>
+    </span></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
+    <span class="comment">&lt;!-- 箭头颜色 --&gt;</span>
+    <span class="tag">&lt;<span class="title">style</span> <span class="attribute">name</span>=<span class="value">"AppTheme.DrawerArrowToggle"</span> <span class="attribute">parent</span>=<span class="value">"Base.Widget.AppCompat.DrawerArrowToggle"</span>&gt;</span><span class="css">
+        &lt;<span class="tag">item</span> <span class="tag">name</span>="<span class="tag">color</span>"&gt;<span class="at_rule">@<span class="keyword">android:color/white&lt;/item&gt;</span>
+    </span></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">resources</span>&gt;</span>
+</code></pre><h3 id="其他代码">其他代码</h3><p>在arrays.xml和strings.xml中自行添加,以上是显示类似google+的效果，实现知乎的效果只需要修改<code>activity_main.xml</code>，将<code>ToolBar</code>放在<code>DrawerLayout</code>之外，如下</p>
+<pre><code>&lt;LinearLayout
+    xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span>
+    android:layout_width=<span class="string">"fill_parent"</span>
+    android:layout_height=<span class="string">"fill_parent"</span>
+    android:orientation=<span class="string">"vertical"</span>&gt;
+    &lt;android<span class="class">.support</span><span class="class">.v7</span><span class="class">.widget</span><span class="class">.Toolbar</span>
+        android:layout_width=<span class="string">"fill_parent"</span>
+        android:layout_height=<span class="string">"wrap_content"</span>
+        android:<span class="attribute">background</span>=<span class="string">"#ff12b8dd"</span>
+        android:id=<span class="string">"@+id/tool_bar"</span>&gt;
+    &lt;/android<span class="class">.support</span><span class="class">.v7</span><span class="class">.widget</span><span class="class">.Toolbar</span>&gt;
+    &lt;android<span class="class">.support</span><span class="class">.v4</span><span class="class">.widget</span><span class="class">.DrawerLayout</span>
+        android:layout_width=<span class="string">"fill_parent"</span>
+        android:layout_height=<span class="string">"fill_parent"</span>
+        android:id=<span class="string">"@+id/drawer"</span>&gt;
+        &lt;FrameLayout
+            android:layout_width=<span class="string">"fill_parent"</span>
+            android:layout_height=<span class="string">"fill_parent"</span>
+            android:id=<span class="string">"@+id/fragment_layout"</span>&gt;
+        &lt;/FrameLayout&gt;
+        &lt;include
+            android:id=<span class="string">"@+id/drawer_left_layout"</span>
+            layout=<span class="string">"@layout/drawer_left_layout"</span>
+            /&gt;
+    &lt;/android<span class="class">.support</span><span class="class">.v4</span><span class="class">.widget</span><span class="class">.DrawerLayout</span>&gt;
+&lt;/LinearLayout&gt;
+</code></pre><h3 id="注意">注意</h3><ol>
+<li>本文使用的开发工具是<code>Android Studio</code>，如果你在eclipse下开发，必须手动添加<code>android-support-v7-appcompat</code>库项目，切记不能简单的添加v4和v7的jar文件，因为我们需要用到v7库项目下的一些其他资源。</li>
+<li>代码中用到的<code>Fragment</code>，<code>FragmentTransaction</code>，<code>DrawerLayout</code>，<code>Toolbar</code>等，必须使用v4,v7兼容包下的类。</li>
+<li>使用<code>Android Studio</code>开发环境创建的<code>Fragment</code>文件，实现了<code>onAttach</code>方法，该代码告诉我们需要在使用该<code>Fragment的Activity</code>中实现<code>OnFragmentInteractionListener</code>接口，否则会报错，此接口用于<code>Fragment</code>与<code>Activity</code>的交互，如果不需要可将如下代码删除。</li>
+</ol>
+<pre><code><span class="annotation">@Override</span>
+<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onAttach</span><span class="params">(Activity activity)</span> </span>{
+    <span class="keyword">super</span>.onAttach(activity);
+    <span class="keyword">try</span> {
+        mListener = (OnFragmentInteractionListener) activity;
+    } <span class="keyword">catch</span> (ClassCastException e) {
+        <span class="keyword">throw</span> <span class="keyword">new</span> ClassCastException(activity.toString()
+                + <span class="string">" must implement OnFragmentInteractionListener"</span>);
+    }
+}
+</code></pre>
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/android-note/tags/DrawerLayout/"> #DrawerLayout </a>
+          
+            <a href="/android-note/tags/ToolBar/"> #ToolBar </a>
+          
+            <a href="/android-note/tags/google/"> #google+ </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/android-note/2015/06/24/Android图片读写及简单处理/">Android图片读写及简单处理</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2015/06/27/结合LayoutDrawer和ToolBar实现google-侧滑导航/"
+               data-title="结合DrawerLayout和ToolBar实现google+侧滑导航" data-url="http://github.xucan.me/android-note/2015/06/27/结合LayoutDrawer和ToolBar实现google-侧滑导航/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/android-note/images/avatar.jpg" alt="XuCan" />
+          <p class="site-author-name">XuCan</p>
+        </div>
+        <p class="site-description motion-element"></p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/android-note/archives">
+              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/android-note/categories">
+              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/android-note/tags">
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/crazyxu" target="_blank">github</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.weibo.com/u/3303536945" target="_blank">weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.zhihu.com/people/xu-can-7" target="_blank">zhihu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/android-note/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#activity_main-xml"><span class="nav-number">2.</span> <span class="nav-text">activity_main.xml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#drawer_left_layout-xml"><span class="nav-number">3.</span> <span class="nav-text">drawer_left_layout.xml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MainActivity-java"><span class="nav-number">4.</span> <span class="nav-text">MainActivity.java</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#style-xml"><span class="nav-number">5.</span> <span class="nav-text">style.xml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他代码"><span class="nav-number">6.</span> <span class="nav-text">其他代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意"><span class="nav-number">7.</span> <span class="nav-text">注意</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">XuCan</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/android-note/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/android-note/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/android-note/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/android-note/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/android-note/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/android-note/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/android-note/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/android-note/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/android-note/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"crazyxu"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
